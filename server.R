@@ -74,12 +74,16 @@ shinyServer(function(input, output) {
                                     rep("K-means center",numClusters()))
                       )
         )
+        if (!showResultCenters) {
+            myDF <- myDF[!grepl("K-means center", myDF$Type),]
+        }
         
-        ggplot(data = myDF, aes(x,y, color=cluster, shape=Type)) +
-            geom_point(size=4) +
+        ggplot(data = myDF, aes(x,y, color=cluster, shape=Type, size=Type)) +
+            geom_point() +
             #scale_color_manual(values = #c("blue","red","gold","purple")) +
             scale_color_brewer(palette = "Set1") + 
             scale_shape_manual(values = c(20,1,8)) +
+            scale_size_manual(values = c(4,5,4), guide=FALSE) +
             guides(color = guide_legend(title = "Initial Compression", 
                                         #override.aes = list(size=5), 
                                         order = 2),
