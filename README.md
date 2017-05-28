@@ -1,6 +1,6 @@
 # Initialization methods for the k-means clustering algorithm
 
-Simple shiny app to visualize several initialization methods for the k-means algorithm. Application is hosted on [https://baldvine.shinyapps.io/initializeKmeans/](https://baldvine.shinyapps.io/initializeKmeans/)!
+Simple shiny app to visualize several initialization methods for the k-means algorithm. Application is hosted here: <a href="https://baldvine.shinyapps.io/initializeKmeans/" target="_blank">https://baldvine.shinyapps.io/initializeKmeans/</a>
 
 The dataset is the ruspini dataset (from the *cluster* package), which has 4 distinct clusters. We investigate and visualize four initialization methods:
 
