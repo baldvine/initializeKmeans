@@ -84,7 +84,7 @@ shinyServer(function(input, output) {
             scale_color_brewer(palette = "Set1") + 
             scale_shape_manual(values = c(20,1,8)) +
             scale_size_manual(values = c(4,5,4), guide=FALSE) +
-            guides(color = guide_legend(title = "Initial Compression", 
+            guides(color = guide_legend(title = "Cluster", 
                                         #override.aes = list(size=5), 
                                         order = 2),
                    shape = guide_legend(title = "Type", order = 1)) +
