@@ -14,7 +14,7 @@ library(ggplot2)
 shinyUI(fluidPage(
   
   # Application title
-  titlePanel("Visualize k-means"),
+  titlePanel("Settings for k-means"),
   
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
@@ -41,7 +41,7 @@ shinyUI(fluidPage(
     
     # Show a plot of the generated distribution
     mainPanel(
-      h2("Plot and such - change!"),
+      #h2("Plot and such - change!"),
        plotOutput("kMeansPlot")
     )
   )
