@@ -121,12 +121,11 @@ $(document).ready(function () {
 
 <div id="initialization-methods-for-the-k-means-clustering-algorithm" class="section level1">
 <h1>Initialization methods for the k-means clustering algorithm</h1>
-<p>Simple shiny app to visualize several initialization methods for the k-means algorithm. Application is hosted on <a href="https://baldvine.shinyapps.io/initializeKmeans/" class="uri">https://baldvine.shinyapps.io/initializeKmeans/</a></p>
-<p><a href="https://baldvine.shinyapps.io/initializeKmeans/" target="_blank">https://baldvine.shinyapps.io/initializeKmeans/</a></p>
-<p>The dataset is the ruspini dataset (from the <em>cluster</em> package), which has 4 distinct clusters. We investigate and visualize four initialization methods:</p>
+<p>Simple shiny app to visualize several initialization methods for the k-means algorithm. Application is hosted here: <a href="https://baldvine.shinyapps.io/initializeKmeans/" target="_blank">https://baldvine.shinyapps.io/initializeKmeans/</a></p>
+<p>The default dataset is the ruspini dataset (from the <em>cluster</em> package), which has 4 distinct clusters. There are multiple data sets to choose from. We investigate and visualize four initialization methods:</p>
 <ul>
 <li><strong>“Random”</strong>: Randomly assign data points as intial clusters (best of 25 runs)</li>
-<li><strong>“KA method”</strong>: From Kaufman &amp; Roussef [1], and described in detail in [2].</li>
+<li><strong>“KA method”</strong>: From Kaufman &amp; Roussef [1], and described in detail in [2]. This produces great results, but it is very computationally expensive.</li>
 <li><strong>“Extreme”</strong>: First center furthest from origin. Subsequent centers are the furthest from their nearest cluster center. See reference [3].</li>
 <li><strong>“k-means++”</strong>: First center chosen at random. Subsequent centers randomly, but weighted based on distance to nearest cluster center (best of 25 runs). See reference [4].</li>
 </ul>

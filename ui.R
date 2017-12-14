@@ -23,7 +23,7 @@ shinyUI(fluidPage(
             h4("Initialization is key when using the k-means algorithm. Here, we inspect four methods. Select one and see how they differ."),
             # # Ideally, I'd have a few datasets to choose from:
             selectInput(inputId = "dataSet",
-                        label = "Choose data set:",
+                        label = "Choose Data Set:",
                         choices =  c("Ruspini" = "ruspini",
                                      #"Iris" = "iris",
                                      "Gaussian" = "gauss",

@@ -11,10 +11,7 @@ source("./initKmeansMethods.R")
 shinyServer(function(input, output) {
     
     
-    # Let's just use the ruspini data from the cluster package
-    # At some point it would be fun to give the option to change
-    #     the dataset used. NB: code already in place in ui.R
-    #
+    # Choose dataset:
     data2use <- reactive({
         if (input$dataSet == "ruspini") {
             return(ruspini)
