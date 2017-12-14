@@ -22,13 +22,16 @@ shinyUI(fluidPage(
         sidebarPanel(
             h4("Initialization is key when using the k-means algorithm. Here, we inspect four methods. Select one and see how they differ."),
             # # Ideally, I'd have a few datasets to choose from:
-            # selectInput(inputId = "dataSet", 
-            #             label = "Choose data set:", 
-            #             choices =  c("Ruspini" = "ruspini",
-            #                          "Iris" = "iris",
-            #                          "Gaussian" = "gauss",
-            #                          "Uniform" = "unif"), 
-            #             selected = "ruspini"),
+            selectInput(inputId = "dataSet",
+                        label = "Choose data set:",
+                        choices =  c("Ruspini" = "ruspini",
+                                     #"Iris" = "iris",
+                                     "Gaussian" = "gauss",
+                                     "Uniform" = "unif",
+                                     "One Circle" = "oneCircle",
+                                     "Two Circles" = "twoCircles",
+                                     "Bullseye" = "bullseye"),
+                        selected = "ruspini"),
             selectInput(inputId = "initMethod", 
                         label = "Choose Initialization Method:", 
                         choices =  c("Random" = "rand",
@@ -55,8 +58,8 @@ shinyUI(fluidPage(
             h2("Baldvin Einarsson, PhD"),
             h2("Visualization"),
             helpText(a("See github page for details on initialization methods (and code!)",
-                       href="https://github.com/baldvine/initializeKmeans",
-                       target="_blank")
+                       href = "https://github.com/baldvine/initializeKmeans",
+                       target = "_blank")
             ),
             plotOutput("kMeansPlot")
         )

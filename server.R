@@ -15,7 +15,34 @@ shinyServer(function(input, output) {
     # At some point it would be fun to give the option to change
     #     the dataset used. NB: code already in place in ui.R
     #
-    data2use <- reactive({ruspini})
+    data2use <- reactive({
+        if (input$dataSet == "ruspini") {
+            return(ruspini)
+        }
+        if (input$dataSet == "unif") {
+            return(data.frame(x = runif(1000), y = runif(1000)))
+        }
+        if (input$dataSet == "gauss") {
+            return(data.frame(x = rnorm(1000), y = rnorm(1000)))
+        }
+        if (input$dataSet == "oneCircle") {
+            rad <- 2*pi*runif(250)
+            return(data.frame(x = cos(rad), y = sin(rad)))
+        }
+        if (input$dataSet == "twoCircles") {
+            outer <- 2*pi*runif(350)
+            inner <- 2*pi*runif(200)
+            return(data.frame(x = c(cos(outer),0.5*cos(inner)), 
+                              y = c(sin(outer),0.5*sin(inner)))
+            )
+        }
+        if (input$dataSet == "bullseye") {
+            rad <- 2*pi*runif(250)
+            return(data.frame(x = c(cos(rad),rnorm(300, sd = 0.2)), 
+                              y = c(sin(rad),rnorm(300, sd = 0.2)))
+            )
+        }
+        })
     
     # Get number of clusters:
     numClusters <- reactive({input$numCluster})
@@ -54,7 +81,7 @@ shinyServer(function(input, output) {
     })
     
     kMeansSolution <- reactive({
-        if (selectedInitMethod() %in% c("detContrib", "detExtreme")){
+        if (selectedInitMethod() %in% c("detContrib", "detExtreme")) {
             numStart <- 1
         } else {
             numStart <- 25
@@ -68,8 +95,8 @@ shinyServer(function(input, output) {
         
         showResultCenters <- input$showCenter
         myDF <- cbind(rbind(data2use(),initClusters(),kMeansSolution()$centers),
-                      cluster=as.factor(c(kMeansSolution()$cluster,1:numClusters(),1:numClusters())),
-                      Type=factor(c(rep("Data",nrow(data2use())),
+                      cluster = as.factor(c(kMeansSolution()$cluster,1:numClusters(),1:numClusters())),
+                      Type = factor(c(rep("Data",nrow(data2use())),
                                     rep("Initial center",numClusters()),
                                     rep("K-means center",numClusters()))
                       )
@@ -78,12 +105,13 @@ shinyServer(function(input, output) {
             myDF <- myDF[!grepl("K-means center", myDF$Type),]
         }
         
-        ggplot(data = myDF, aes(x,y, color=cluster, shape=Type, size=Type)) +
+        myPlot <- 
+            ggplot(data = myDF, aes(x,y, color = cluster, shape = Type, size = Type)) +
             geom_point() +
             #scale_color_manual(values = #c("blue","red","gold","purple")) +
             scale_color_brewer(palette = "Set1") + 
             scale_shape_manual(values = c(20,1,8)) +
-            scale_size_manual(values = c(4,5,4), guide=FALSE) +
+            scale_size_manual(values = c(4,5,4), guide = FALSE) +
             guides(color = guide_legend(title = "Cluster", 
                                         #override.aes = list(size=5), 
                                         order = 2),
@@ -96,7 +124,12 @@ shinyServer(function(input, output) {
         # 
         # # 
         # hist(x, breaks = bins, col = 'darkgray', border = 'white')
+
+        if (input$dataSet %in% c("oneCircle","twoCircles", "bullseye")) {
+            myPlot <- myPlot + coord_equal()
+        }
         
+        return(myPlot)        
     })
     
 })
