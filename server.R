@@ -24,19 +24,23 @@ shinyServer(function(input, output) {
         }
         if (input$dataSet == "oneCircle") {
             rad <- 2*pi*runif(250)
-            return(data.frame(x = cos(rad), y = sin(rad)))
+            len <- rnorm(250, mean = sqrt(2), sd = 0.01)
+            return(data.frame(x = len*cos(rad), y = len*sin(rad)))
         }
         if (input$dataSet == "twoCircles") {
-            outer <- 2*pi*runif(350)
-            inner <- 2*pi*runif(200)
-            return(data.frame(x = c(cos(outer),0.5*cos(inner)), 
-                              y = c(sin(outer),0.5*sin(inner)))
+            outerRad <- 2*pi*runif(350)
+            outerLen <- rnorm(350, mean = sqrt(2), sd = 0.02)
+            innerRad <- 2*pi*runif(200)
+            innerLen <- rnorm(200, mean = 1, sd = 0.01)
+            return(data.frame(x = c(outerLen*cos(outerRad),innerLen*cos(innerRad)), 
+                              y = c(outerLen*sin(outerRad),innerLen*sin(innerRad)))
             )
         }
         if (input$dataSet == "bullseye") {
             rad <- 2*pi*runif(250)
-            return(data.frame(x = c(cos(rad),rnorm(300, sd = 0.2)), 
-                              y = c(sin(rad),rnorm(300, sd = 0.2)))
+            len <- rnorm(250, mean = sqrt(2), sd = 0.01)
+            return(data.frame(x = c(len*cos(rad),rnorm(300, sd = 0.2)), 
+                              y = c(len*sin(rad),rnorm(300, sd = 0.2)))
             )
         }
         })
@@ -113,7 +117,9 @@ shinyServer(function(input, output) {
                                         #override.aes = list(size=5), 
                                         order = 2),
                    shape = guide_legend(title = "Type", order = 1)) +
-            theme(plot.title = element_text(hjust = 0.5))
+            theme(plot.title = element_text(hjust = 0.5), 
+                  legend.title = element_text(size = 14), 
+                  legend.text = element_text(size = 12))
         
         #        generate bins based on input$bins from ui.R
         # x    <- faithful[, 2] 
