@@ -5,8 +5,14 @@ library(shiny)
 library(ggplot2)
 library(cluster)
 library(flexclust)
+library(magrittr)
+library(Rcpp)
+library(RcppArmadillo)
 
 source("./initKmeansMethods.R")
+sourceCpp("./initializeKmeans.cpp")
+
+useCpp <- TRUE  # C++ versions exist!
 
 shinyServer(function(input, output) {
     
@@ -62,22 +68,46 @@ shinyServer(function(input, output) {
                                      replace = FALSE),])
         }
         if (selectedInitMethod() == "detContrib") {
-            return(initializeKMeans_contrib(data2use(), 
-                                            numClusters(), 
-                                            names = names(data2use()))
-            )
+            if (useCpp) {
+                return(
+                    initializeKMeans_contrib_cpp(as.matrix(data2use()),numClusters()) %>% 
+                        as.data.frame() %>% 
+                        setNames(nm = names(data2use()))
+                    )
+            } else {
+                return(initializeKMeans_contrib(data2use(),
+                                                numClusters(),
+                                                names = names(data2use()))
+                )
+            }
         }        
         if (selectedInitMethod() == "detExtreme") {
-            return(initializeKMeans_extreme(data2use(), 
-                                            numClusters(), 
-                                            names = names(data2use()))
-            )
+            if (useCpp) {
+                return(
+                    initializeKMeans_extreme_cpp(as.matrix(data2use()),numClusters()) %>% 
+                        as.data.frame() %>% 
+                        setNames(nm = names(data2use()))
+                    )
+            } else{
+                return(initializeKMeans_extreme(data2use(),
+                                                numClusters(),
+                                                names = names(data2use()))
+                )
+            }
         }
         if (selectedInitMethod() == "kpp") {
-            return(initializeKMeans_pp(data2use(), 
-                                       numClusters(), 
-                                       names = names(data2use()))
-            )
+            if (useCpp) {
+                return(
+                    initializeKMeans_pp_cpp(as.matrix(data2use()),numClusters()) %>%
+                        as.data.frame() %>%
+                        setNames(nm = names(data2use()))
+                )
+            } else {
+                return(initializeKMeans_pp(data2use(),
+                                           numClusters(),
+                                           names = names(data2use()))
+                )
+            }
         }
     })
     
@@ -108,7 +138,7 @@ shinyServer(function(input, output) {
         
         myPlot <- 
             ggplot(data = myDF, aes(x,y, color = cluster, shape = Type, size = Type)) +
-            geom_point() +
+            geom_point(alpha = 0.8) +
             #scale_color_manual(values = #c("blue","red","gold","purple")) +
             scale_color_brewer(palette = "Set1") + 
             scale_shape_manual(values = c(20,1,8)) +
