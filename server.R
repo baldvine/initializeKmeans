@@ -9,10 +9,13 @@ library(magrittr)
 library(Rcpp)
 library(RcppArmadillo)
 
-source("./initKmeansMethods.R")
-sourceCpp("./initializeKmeans.cpp")
 
 useCpp <- TRUE  # C++ versions exist!
+if (useCpp) {
+    sourceCpp("./initializeKmeans.cpp")
+} else {
+    source("./initKmeansMethods.R")
+}
 
 shinyServer(function(input, output) {
     
