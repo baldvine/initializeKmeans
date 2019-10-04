@@ -25,6 +25,7 @@ shinyUI(fluidPage(
             selectInput(inputId = "dataSet",
                         label = "Choose Data Set:",
                         choices =  c("Ruspini" = "ruspini",
+                                     "xClara" = "xclara",
                                      #"Iris" = "iris",
                                      "Gaussian" = "gauss",
                                      "Uniform" = "unif",

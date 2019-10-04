@@ -8,7 +8,7 @@ library(flexclust)
 library(magrittr)
 library(Rcpp)
 library(RcppArmadillo)
-
+library(tclust)
 
 useCpp <- TRUE  # C++ versions exist!
 if (useCpp) {
@@ -24,6 +24,11 @@ shinyServer(function(input, output) {
     data2use <- reactive({
         if (input$dataSet == "ruspini") {
             return(ruspini)
+        }
+        if (input$dataSet == "xclara") {
+            myData <- xclara
+            names(myData) <- c("x","y")
+            return(myData)
         }
         if (input$dataSet == "unif") {
             return(data.frame(x = runif(1000), y = runif(1000)))
@@ -114,15 +119,17 @@ shinyServer(function(input, output) {
         }
     })
     
+    # Obtatin kmeans solution:
     kMeansSolution <- reactive({
         if (selectedInitMethod() %in% c("detContrib", "detExtreme")) {
             numStart <- 1
         } else {
             numStart <- 25
         }
-        return(kmeans(x = data2use(), 
-                      centers = initClusters(), 
-                      nstart = numStart))
+        
+        return(stats::kmeans(x = data2use(), 
+                             centers = initClusters(), 
+                             nstart = numStart))
     })
     
     output$kMeansPlot <- renderPlot({
