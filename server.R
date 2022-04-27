@@ -166,7 +166,9 @@ shinyServer(function(input, output) {
             #scale_color_manual(values = #c("blue","red","gold","purple")) +
             scale_color_brewer(palette = "Set1") + 
             scale_alpha_manual(values = c(plotAlpha(), 1,1), guide = "none") +
-            scale_shape_manual(values = c(19,9,75)) +  #c(20,1,8)
+            scale_shape_manual(values = c("Data" = 19,
+                                          "Initial center" = 9,
+                                          "Final center" = 75)) +  #c(20,1,8)
             scale_size_manual(values = c(4,5,5), guide = "none") +
             guides(color = guide_legend(title = "Cluster", 
                                         override.aes = list(size=4, alpha = 1), 
@@ -186,7 +188,8 @@ shinyServer(function(input, output) {
                   panel.background = element_rect(fill = "white", colour = NA), 
                   panel.border = element_rect(fill = NA, colour = "grey20")) +
             coord_equal()
-        if (showResultCenters) {
+        if (showResultCenters) {  
+        # Shows up as black. If removed, they get colored according to the cluster
             myPlot <- myPlot +
                 geom_point(data = myDF[grepl("Final center", myDF$Type),], 
                            inherit.aes = FALSE, aes(x,y),
