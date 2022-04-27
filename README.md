@@ -27,3 +27,8 @@ Note that all methods use data points as inital cluster centers. Both "KA method
 4. David Arthur and Sergei Vassilvitskii. k-means++: the advantages of careful
   seeding. In *Proceedings of the eighteenth annual ACM-SIAM symposium
   on Discrete algorithms*, pages 1027-1035, Philadelphia, 2007.
+  
+See also:
+
+5. Jain, Anil K. Data clustering: 50 years beyond K-means. 
+   *Pattern recognition letters*, 31(8), pp.651-666, 2010.

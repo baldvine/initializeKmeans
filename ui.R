@@ -43,12 +43,16 @@ shinyUI(fluidPage(
             sliderInput(inputId = "numCluster", 
                         label = "Number of clusters",
                         value = 4, min = 1, max = 9,
+                        ticks = FALSE,
                         step = 1),
             # # Can't decide if I prefer slider or box:
             # numericInput(inputId = "numCluster", 
             #              label = "Number of clusters", 
             #              value = 4, min = 1, max = 12, 
             #              step = 1)
+            checkboxInput(inputId = "showInitial", 
+                          label = "Show initial cluster centers", 
+                          value = TRUE),
             checkboxInput(inputId = "showCenter", 
                           label = "Show resulting cluster centers", 
                           value = TRUE)
