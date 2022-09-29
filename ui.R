@@ -60,8 +60,8 @@ shinyUI(fluidPage(
         
         # Show a plot of the generated distribution
         mainPanel(
+            h2("k-means: Data Sets and Initialization Methods"),
             h2("Baldvin Einarsson, PhD"),
-            h2("Visualization"),
             helpText(a("See github page for details on initialization methods (and code!)",
                        href = "https://github.com/baldvine/initializeKmeans",
                        target = "_blank")
